@@ -1,5 +1,9 @@
 # Getting Started with Create React App
 
+## Link
+
+[https://kulikovoleksandr.github.io/video-player/build/index.html](https://kulikovoleksandr.github.io/video-player/build/index.html)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

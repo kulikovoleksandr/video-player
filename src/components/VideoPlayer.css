@@ -1,0 +1,18 @@
+.video-player {
+    /* background-color: red; */
+    display: flex;
+    gap: 1em;
+}
+
+.video-player__main {
+    flex-grow: 1;
+}
+
+.video-player__video {
+    background-color: #eee;
+    width: 100%;
+}
+
+.video-player__sidebar {
+    width: 25%;
+}
