@@ -1,0 +1,71 @@
+.vp {
+  display: flex;
+  gap: var(--ratio);
+  &__main {
+    flex-grow: 1;
+    display: flex;
+    gap: var(--ratio);
+    flex-direction: column;
+  }
+  &__sidebar {
+    width: 25%;
+    min-width: 10rem;
+  }
+  &__header {
+    display: flex;
+    align-items: flex-end;
+  }
+  &__title {
+    flex-grow: 1;
+    font-size: clamp(2em, 5vw, 3em);
+  }
+  &__video {
+    background-color: #eee;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+  &__controls {
+    display: flex;
+    gap: var(--ratio);
+    align-items: center;
+  }
+  &__progress-bar {
+    flex-grow: 1;
+  }
+  &__button {
+    height: var(--height-element);
+    min-width: var(--height-element);
+    border: none;
+    font-weight: bold;
+    &--play {
+      padding-left: 0;
+      padding-right: 0;
+      min-width: 5em;
+    }
+  }
+  &__events {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__select {
+    height: var(--height-element);
+    padding: 0 var(--ratio);
+  }
+
+  &__event-item {
+    border-bottom: 1px solid;
+  }
+
+  &__event {
+    display: block;
+    text-align: left;
+    width: 100%;
+    height: var(--height-element);
+    background: transparent;
+    border: none;
+    &--current {
+      background: buttonface;
+    }
+  }
+}

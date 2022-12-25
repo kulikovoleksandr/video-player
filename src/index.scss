@@ -1,0 +1,60 @@
+:root {
+  --ratio: 1em;
+  --height-element: 2.5em;
+  --border-color: currentColor;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+* {
+  & {
+    padding: 0;
+    margin: 0;
+    font: inherit;
+  }
+  &,
+  &:before,
+  &:after {
+    box-sizing: border-box;
+  }
+}
+
+html {
+  color-scheme: dark light;
+}
+
+body {
+  font-size: 1em;
+  font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input,
+button,
+textarea,
+select {
+  border-radius: 0;
+}
+
+img,
+svg,
+video,
+picture,
+iframe {
+  max-width: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(1rem, 5vw, 3rem);
+}
