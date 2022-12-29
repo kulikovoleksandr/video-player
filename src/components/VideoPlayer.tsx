@@ -22,7 +22,7 @@ const VideoPlayer = ({ videos, events }: Props) => {
   const [videoPlaying, setVideoPlaying] = useState<boolean>(false);
   const [videoCanPlay, setVideoCanPlay] = useState<boolean>(false);
 
-  const [currentVideo, setCurrentVideo] = useState<Video>(videos[0]);
+  const [currentVideo, setCurrentVideo] = useState<Video>(videos[2]);
   const [currentVideoDuration, setCurrentVideoDuration] = useState<number>(0);
   const [currentVideoTime, setCurrentVideoTime] = useState<number>(0);
 
@@ -33,9 +33,7 @@ const VideoPlayer = ({ videos, events }: Props) => {
   );
 
   const [currentEvents, setCurrentEvents] = useState<{}[]>(filterdEvents);
-
   const onChangeHandle = (e: { target: HTMLSelectElement }) => {
-    // setVideoPlaying(false);
     const current = videos.find((obj) => obj.title === e.target.value);
     if (current) {
       setCurrentVideo(current);
@@ -43,18 +41,23 @@ const VideoPlayer = ({ videos, events }: Props) => {
   };
 
   const eventButtons = document.querySelectorAll(".vp__event");
+  let eventButtonsOnTimeUpdate: Element[] = [];
 
   const onTimeUpdateHandle = (e: any) => {
     const currentTime = e.target.currentTime;
     setCurrentVideoTime(currentTime);
+
     eventButtons.forEach((button) => {
       const eventTime = Number(button.getAttribute("data-time"));
+
+      button.classList.remove("vp__event--current");
       if (currentTime >= eventTime) {
-        button.classList.add("vp__event--current");
-      } else {
-        button.classList.remove("vp__event--current");
+        eventButtonsOnTimeUpdate.push(button);
       }
     });
+
+    const lastEvent = eventButtonsOnTimeUpdate.pop();
+    lastEvent?.classList.add("vp__event--current");
   };
 
   const videoPlayingHandle = () => {
