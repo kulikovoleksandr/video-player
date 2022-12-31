@@ -1,5 +1,6 @@
 .vp {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--ratio);
   &__main {
     flex-grow: 1;
@@ -8,8 +9,7 @@
     flex-direction: column;
   }
   &__sidebar {
-    width: 25%;
-    min-width: 10rem;
+    width: min(100%, 200px);
   }
   &__header {
     display: flex;

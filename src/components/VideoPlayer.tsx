@@ -40,24 +40,28 @@ const VideoPlayer = ({ videos, events }: Props) => {
     }
   };
 
-  const eventButtons = document.querySelectorAll(".vp__event");
-  let eventButtonsOnTimeUpdate: Element[] = [];
+  const eventButtonHandle = (button: Element) => {
+    const eventTimeStart = Number(button.getAttribute("data-time-start"));
+    const eventTimeEnd = Number(button.getAttribute("data-time-end"));
+    if (
+      currentVideoTime >= eventTimeStart &&
+      currentVideoTime <= eventTimeEnd
+    ) {
+      button.classList.add("vp__event--current");
+    } else {
+      button.classList.remove("vp__event--current");
+    }
+  };
+
+  const eventButtonsHandle = () => {
+    const eventButtons: NodeListOf<Element> =
+      document.querySelectorAll(".vp__event");
+    eventButtons.forEach((button) => eventButtonHandle(button));
+  };
 
   const onTimeUpdateHandle = (e: any) => {
     const currentTime = e.target.currentTime;
     setCurrentVideoTime(currentTime);
-
-    eventButtons.forEach((button) => {
-      const eventTime = Number(button.getAttribute("data-time"));
-
-      button.classList.remove("vp__event--current");
-      if (currentTime >= eventTime) {
-        eventButtonsOnTimeUpdate.push(button);
-      }
-    });
-
-    const lastEvent = eventButtonsOnTimeUpdate.pop();
-    lastEvent?.classList.add("vp__event--current");
   };
 
   const videoPlayingHandle = () => {
@@ -82,7 +86,9 @@ const VideoPlayer = ({ videos, events }: Props) => {
     setCurrentEvents(filterdEvents);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    eventButtonsHandle();
+  }, [currentVideoTime]);
 
   return (
     <div className="vp">
@@ -104,9 +110,11 @@ const VideoPlayer = ({ videos, events }: Props) => {
           </select>
         </div>
         <video
-          ref={videoEl}
           className="vp__video"
           src={currentVideo.url}
+          ref={videoEl}
+          autoPlay
+          muted
           onLoadedMetadata={(e) => {
             loadedMetadataHandle(e);
           }}
@@ -189,15 +197,22 @@ const VideoPlayer = ({ videos, events }: Props) => {
       </div>
       <div className="vp__sidebar">
         <ul className="vp__events">
-          {currentEvents.map((event: any, i: number) => (
+          {currentEvents.map((event: any, i: number, events: any) => (
             <li className="vp__event-item" key={i}>
               <button
-                data-time={event.videoTime}
+                data-time-start={event.videoTime}
+                data-time-end={
+                  events.length - 1 > i
+                    ? events[i + 1].videoTime - 0.01
+                    : currentVideoDuration
+                }
                 className="vp__event"
                 type="button"
                 onClick={(e) => {
+                  eventButtonHandle(e.currentTarget);
                   if (video) {
-                    const time = e.currentTarget.getAttribute("data-time");
+                    const time =
+                      e.currentTarget.getAttribute("data-time-start");
                     video.currentTime = Number(time);
                     if (videoPlaying) {
                       video.play();
