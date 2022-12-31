@@ -43,10 +43,7 @@ const VideoPlayer = ({ videos, events }: Props) => {
   const eventButtonHandle = (button: Element) => {
     const eventTimeStart = Number(button.getAttribute("data-time-start"));
     const eventTimeEnd = Number(button.getAttribute("data-time-end"));
-    if (
-      currentVideoTime >= eventTimeStart &&
-      currentVideoTime <= eventTimeEnd
-    ) {
+    if (currentVideoTime >= eventTimeStart && currentVideoTime < eventTimeEnd) {
       button.classList.add("vp__event--current");
     } else {
       button.classList.remove("vp__event--current");
@@ -203,7 +200,7 @@ const VideoPlayer = ({ videos, events }: Props) => {
                 data-time-start={event.videoTime}
                 data-time-end={
                   events.length - 1 > i
-                    ? events[i + 1].videoTime - 0.01
+                    ? events[i + 1].videoTime
                     : currentVideoDuration
                 }
                 className="vp__event"
